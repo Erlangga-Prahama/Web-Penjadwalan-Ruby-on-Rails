@@ -1,0 +1,32 @@
+<!-- app/views/subjects/_edit_modal.html.erb -->
+<div id="edit-modal">
+  <div id="mapel-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="relative p-4 w-full max-w-md">
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="flex items-center justify-between p-4 border-b">
+          <h3 class="text-lg font-semibold">Edit Mata Pelajaran</h3>
+          <button type="button" class="text-gray-400 hover:text-gray-900" onclick="closeModal()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        <%= form_with(model: subject, url: subject_path(subject), method: :patch) do |f| %>
+          <div class="p-4">
+            <div class="mb-4">
+              <%= f.label :name, "Mata Pelajaran", class: "block mb-2 text-sm font-medium" %>
+              <%= f.text_field :name, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %>
+            </div>
+            <%= f.submit "Simpan", class: "text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function closeModal() {
+    document.getElementById('mapel-modal').style.display = 'none';
+  }
+</script>
