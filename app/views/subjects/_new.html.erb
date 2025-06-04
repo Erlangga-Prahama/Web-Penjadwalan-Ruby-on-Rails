@@ -1,17 +1,27 @@
-<!-- app/views/subjects/_edit_modal.html.erb -->
-  <div id="edit-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+
+  <div id="new-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
     <div class="relative p-4 w-full max-w-md">
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
         <div class="flex items-center justify-between p-4 border-b">
-          <h3 class="text-lg font-semibold">Edit Mata Pelajaran</h3>
-          <button type="button" class="text-gray-400 hover:text-gray-900" onclick="closeEdit()">
+          <h3 class="text-lg font-semibold">Tambah Mata Pelajaran</h3>
+          <button type="button" class="text-gray-400 hover:text-gray-900" onclick="closeNew()">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
         </div>
-        <%= form_with(model: subject, url: subject_path(subject), method: :patch) do |f| %>
+        <%= form_with(model: subject) do |f| %>
           <div class="p-4">
+            <% if subject.errors.any? %>
+              <div class="mb-4 p-4 bg-red-50 text-red-600 rounded-lg">
+                <h4 class="font-bold">Terjadi kesalahan:</h4>
+                <ul class="list-disc pl-5">
+                  <% subject.errors.full_messages.each do |message| %>
+                    <li><%= message.gsub('Name', 'Nama') %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
             <div class="mb-4">
               <%= f.label :name, "Mata Pelajaran", class: "block mb-2 text-sm font-medium" %>
               <%= f.text_field :name, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %>
@@ -23,8 +33,12 @@
     </div>
   </div>
 
+
 <script>
-  function closeEdit() {
-    document.getElementById('edit-modal').style.display = 'none';
+  function closeNew() {
+    const modal = document.getElementById('new-modal');
+    if (modal) {
+      modal.remove(); // Hapus elemen modal sepenuhnya dari DOM
+    }
   }
 </script>

@@ -1,10 +1,23 @@
 class SubjectsController < ApplicationController
     def index
         @subjects = Subject.all
-        @subject = Subject.new
         @editSubject = Subject.find(params[:id]) if params[:id].present?
 
         render layout: "dash_layout"
+    end
+
+    def new
+        @subject = Subject.new
+
+        respond_to do |format|
+            format.turbo_stream do
+                render turbo_stream: turbo_stream.update(
+                    "new",
+                    partial: "new",
+                    locals: { subject: @subject }
+                )
+            end
+        end
     end
 
     def  create
@@ -15,7 +28,8 @@ class SubjectsController < ApplicationController
             redirect_to subjects_path
         else
             @subjects = Subject.all # Load data index
-            render :index, status: :unprocessable_entity
+            @show_modal = true # Flag untuk menampilkan modal
+            render :index, layout: "dash_layout", status: :unprocessable_entity
         end
     end
 
