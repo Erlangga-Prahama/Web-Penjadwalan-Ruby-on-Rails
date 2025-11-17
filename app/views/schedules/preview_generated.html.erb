@@ -1,0 +1,146 @@
+<div class="p-5 ">
+    <div class="flex">
+     <%= link_to schedules_path, class: "text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-md shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-1.5 text-center me-2 mb-2" do %>
+      <svg class="w-6 h-6 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
+      </svg>
+      Kembali
+    <% end %>
+    <% if current_user&.kepala_sekolah? %>
+      <%= button_to "Sahkan Jadwal", finalize_schedules_path(id: @batch), method: :post, data: { turbo_confirm: "Sahkan jadwal ini?" }, class: "text-white bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-md shadow-green-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "%>
+    <% end %>
+
+  </div>
+
+  <div class="p-4 rounded shadow-lg">
+    <div class="text-center mb-5 w-full">
+      <div class="text-xl font-bold">SMP NEGERI 41 KOTA BEKASI</div>
+      <div class="text-xl font-bold uppercase">JADWAL PEMBELAJARAN SEMESTER <%= @batch.name %> TAHUN <%= @batch.year %></div>
+    </div>
+
+    <% ordered_days = @days %>
+    <% all_time_blocks = @all_time_blocks %>
+    <% grouped_schedules = @schedules %>
+    <% grade_groups = grouped_schedules.group_by { |class_name, _| class_name[/\d+/]&.to_i } %>
+
+    <% grade_groups.each do |grade, class_data| %>
+      <% session_type = grade == 7 ? 'siang' : 'pagi' %>
+      <% class_names = class_data.map(&:first).sort %>
+
+      <div class="overflow-auto p-4 mb-6 bg-white">
+        <h2 class="text-lg font-semibold mb-2"> Kelas <%= grade %></h2>
+        <table class="table-auto border-collapse border w-full text-xs text-center">
+          <thead>
+            <tr class="bg-gray-200">
+              <th class="border p-1 w-24">Hari</th>
+              <th class="border p-1 w-32">Jam</th>
+              <% class_names.each do |class_name| %>
+                <th class="border p-1"><%= class_name %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% ordered_days.each_with_index do |day, d_index| %>
+              <% time_blocks = all_time_blocks[[day, session_type]] || [] %>
+              <% time_blocks.each_with_index do |time_block, t_index| %>
+                <tr>
+                  <% if t_index == 0 %>
+                    <td class="border p-1 bg-gray-100" rowspan="<%= time_blocks.size %>"><%= day %></td>
+                  <% end %>
+                  <td class="border p-1 bg-gray-100"><%= time_block.time %></td>
+
+                  <% class_names.each do |class_name| %>
+                    <% schedules = grouped_schedules[class_name] || [] %>
+                    <% entry = schedules.find do |s|
+                      s.day_name == day && s.time_text == time_block.time
+                    end %>
+
+                    <% if entry.present? %>
+                      <td class="border p-1 <%= entry.activity_names.present? ? 'bg-yellow-100 italic' : 'bg-blue-50' %>">
+                        <% if entry.activity_names.present? %>
+                          <div><%= entry.activity_names %></div>
+                        <% else %>
+                          <div class="font-semibold"><%= "#{entry.subject_code} / #{entry.teacher_code}" %></div>
+                        <% end %>
+                      </td>
+                    <% else %>
+                      <td class="border p-1">&nbsp;</td>
+                    <% end %>
+                  <% end %>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+    <div class="overflow-auto max-h-[600px] px-4 mb-6 bg-white">
+      <h2 class="text-lg font-semibold mb-2">Alokasi Jam Mengajar Guru</h2>
+
+      <% # Ambil pasangan unik [guru, mapel] dari data jadwal %>
+      <% guru_mapel_pairs = @schedules.values.flatten
+                      .select { |s| s.teacher_name.present? && s.subject_name.present? }
+                      .map { |s| [s.teacher_code, s.teacher_name, s.subject_name] }
+                      .uniq
+                      .sort_by { |code, name, subject| [code, subject] } %>
+
+      <% class_names = @schedules.keys.sort %>
+
+      <table class="table-auto border-collapse border w-full text-xs text-center">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border p-1 w-24 sticky top-0 bg-gray-200 z-10">Kode Guru</th>
+            <th class="border p-1 w-40 sticky top-0 bg-gray-200 z-10">Nama Guru</th>
+            <th class="border p-1 w-40 sticky top-0 bg-gray-200 z-10">Mata Pelajaran</th>
+            <% class_names.each do |class_name| %>
+              <th class="border p-1 sticky top-0 bg-gray-200 z-10"><%= class_name %></th>
+            <% end %>
+            <th class="border p-1 w-24 sticky top-0 bg-gray-200 z-10">Total Kelas</th>
+            <th class="border p-1 w-24 sticky top-0 bg-gray-200 z-10">Total Jam</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% guru_mapel_pairs.each do |teacher_code, teacher_name, subject_name| %>
+            <tr>
+              <td class="border p-1 text-center"><%= teacher_code %></td>
+              <td class="border p-1 text-left"><%= teacher_name %></td>
+              <td class="border p-1 text-left"><%= subject_name %></td>
+
+              <% total_jam = 0 %>
+              <% total_kelas = 0 %>
+
+              <% class_names.each do |class_name| %>
+                <% schedules = @schedules[class_name] || [] %>
+                <% jumlah = schedules.count { |s| s.teacher_name == teacher_name && s.subject_name == subject_name } %>
+                <% total_jam += jumlah %>
+                <% total_kelas += 1 if jumlah > 0 %>
+
+                <td class="border p-1">
+                  <% if jumlah > 0 %>
+                    <svg class="w-5 h-5 mx-auto text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  <% else %>
+                    &nbsp;
+                  <% end %>
+                </td>
+              <% end %>
+
+              <td class="border p-1 font-semibold"><%= total_kelas %></td>
+              <td class="border p-1 font-semibold"><%= total_jam %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+
+
+  </div>
+</div>
+
+  <% if @show_new_modal %>
+    <%= render 'new', scheduleBatch: @bat %>
+  <% end %>

@@ -1,0 +1,26 @@
+id:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "tidak boleh kosong"
+              invalid: "harus berupa email yang valid"
+            password:
+              blank: "tidak boleh kosong"
+              too_short: "minimal %{count} karakter"
+              confirmation: "harus sama dengan kata sandi"
+            password_confirmation:
+              blank: "tidak boleh kosong"
+              confirmation: "harus sama dengan kata sandi"
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "tidak boleh kosong"
+      confirmation: "harus sama dengan kata sandi"
+      invalid: "tidak valid"
+      taken: "sudah digunakan"
+      too_short: "minimal %{count} karakter"
+      too_long: "maksimal %{count} karakter"
+      not_a_number: "harus berupa angka"

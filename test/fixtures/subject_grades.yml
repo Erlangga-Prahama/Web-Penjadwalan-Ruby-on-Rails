@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subject: one
+  grade: 1
+  weekly_sessions: 1
+
+two:
+  subject: two
+  grade: 1
+  weekly_sessions: 1

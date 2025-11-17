@@ -1,0 +1,506 @@
+
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start rtl:justify-end">
+
+        <div class="flex ms-2 md:me-24">
+        <%= link_to root_path do %>       
+          <%= image_tag("logoSkl.png", alt: "Logo Sekolah", class: "h-8 me-3") %>
+        <% end %>
+          <span class="self-center text-base font-semibold md:text-2xl whitespace-nowrap dark:text-white">SMP Negeri 41 Kota Bekasi</span>
+        </div>
+      
+      </div>
+      <div class="flex items-center">
+          <div class="flex items-center ms-3">
+            <div>
+              <button type="button" class="flex text-xs md:text-sm bg-white rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                <span class="sr-only">Open user menu</span>
+                <svg class="w-8 h-8 text-blue-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
+                </svg>
+              </button>
+            </div>
+                                
+            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-52 dark:bg-gray-800 dark:divide-gray-700" id="dropdown-user">
+              <div class="px-4 py-3 text-xs md:text-sm text-gray-900 dark:text-white">
+                <p class="font-medium truncate">
+                  <%= current_user.teacher&.nama || current_user.email %>
+                </p>
+              </div>
+              <ul class="py-1 text-xs md:text-sm text-gray-700 dark:text-gray-200">
+                <!-- 
+                <li>
+                  <button id="edit-bio-btn" class="flex items-center gap-2 px-4 py-2 hover:bg-blue-100 w-full dark:hover:bg-gray-700 transition rounded">
+                    <svg class="w-6 h-6 text-blue-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" d="M7 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h1m4-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm7.441 1.559a1.907 1.907 0 0 1 0 2.698l-6.069 6.069L10 19l.674-3.372 6.07-6.07a1.907 1.907 0 0 1 2.697 0Z"/>
+                    </svg>
+                    Edit Biodata
+                  </button>                             
+                </li>
+                 -->  
+                <li>
+                  <button id="edit-user-btn" class="flex items-center gap-2 px-4 py-2 hover:bg-blue-100 w-full dark:hover:bg-gray-700 transition rounded">
+                    <svg class="w-6 h-6 text-blue-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                      <path fill-rule="evenodd" d="M17 10v1.126c.367.095.714.24 1.032.428l.796-.797 1.415 1.415-.797.796c.188.318.333.665.428 1.032H21v2h-1.126c-.095.367-.24.714-.428 1.032l.797.796-1.415 1.415-.796-.797a3.979 3.979 0 0 1-1.032.428V20h-2v-1.126a3.977 3.977 0 0 1-1.032-.428l-.796.797-1.415-1.415.797-.796A3.975 3.975 0 0 1 12.126 16H11v-2h1.126c.095-.367.24-.714.428-1.032l-.797-.796 1.415-1.415.796.797A3.977 3.977 0 0 1 15 11.126V10h2Zm.406 3.578.016.016c.354.358.574.85.578 1.392v.028a2 2 0 0 1-3.409 1.406l-.01-.012a2 2 0 0 1 2.826-2.83ZM5 8a4 4 0 1 1 7.938.703 7.029 7.029 0 0 0-3.235 3.235A4 4 0 0 1 5 8Zm4.29 5H7a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h6.101A6.979 6.979 0 0 1 9 15c0-.695.101-1.366.29-2Z" clip-rule="evenodd"/>
+                    </svg>
+                    Edit Akun
+                  </button>                             
+                </li>
+                <li>
+                  <%= link_to keluar_path, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Keluar?" }, class: "flex items-center gap-2 px-4 py-2 hover:bg-red-100 dark:hover:bg-gray-700 text-red-600 dark:text-red-400 transition rounded" do %>
+                    <svg class="w-6 h-6 text-red-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"/>
+                    </svg>
+                    Keluar
+                  <% end %>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+    </div>
+  </div>
+</nav>
+
+
+<%
+ucapan_list = [
+  "Semoga harimu menyenangkan dan penuh semangat mengajar!",
+  "Jangan lupa tersenyum dan semangat mengajar hari ini!",
+  "Hari yang indah untuk berbagi ilmu!",
+  "Tetap semangat, guru hebat!",
+  "Semoga hari ini penuh inspirasi untuk siswa-siswamu!",
+  "Ayo wujudkan pembelajaran yang seru hari ini!"
+]
+ucapan_random = ucapan_list.sample
+%>
+
+<div class="mt-16 p-3">
+  <% if current_user&.waka_kurikulum? %>
+    <%= link_to dashboard_path, class: "text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-md shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-1.5 text-center me-2 mb-2" do %>
+      <svg class="w-6 h-6 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
+      </svg>
+      Kembali
+    <% end %>
+  <% end %>
+</div>
+
+<%# Ucapan selamat datang %>
+<div class="mb-6 px-4">
+  <div class="bg-gradient-to-r border-l-4 border-blue-500 text-blue-700 p-4 rounded shadow">
+    <p class="text-lg font-semibold">
+      Selamat datang, <%= current_user.teacher&.nama&.downcase&.titleize || current_user.email %> 👋
+    </p>
+    <p class="text-xs md:text-sm text-gray-700"><%= ucapan_random %></p>
+  </div>
+</div>
+
+<%# Jadwal Hari Ini %>
+<h2 class="text-lg font-semibold mt-5 mb-4 px-4">
+  Jadwal Mengajar Anda Hari Ini 
+</h2>
+
+<% if @todays_schedule.any? %>
+  <h3 class="font-semibold text-md mb-2 px-4 text-slate-700"><%= @today_in_indonesian %></h3>
+  <div class="mb-8 overflow-auto rounded-lg shadow mx-4 bg-white">
+    <table class="w-full text-sm text-gray-700 border-collapse">
+      <thead>
+        <tr class="bg-white text-slate-700 text-center uppercase text-xs md:text-sm">
+          <th class="p-3 border-b">No</th>
+          <th class="p-3 border-b">Jam</th>
+          <th class="p-3 border-b">Kelas</th>
+          <th class="p-3 border-b">Mata Pelajaran</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <% @todays_schedule.each_with_index do |schedule, i| %>
+          <tr class="hover:bg-blue-50 text-center">
+            <td class="p-3"><%= i + 1 %></td>
+            <td class="p-3 whitespace-nowrap"><%= schedule.time_text %></td>
+            <td class="p-3"><%= schedule.class_room_name %></td>
+            <td class="p-3"><%= schedule.subject_name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="mb-8 text-center text-gray-500 italic px-4">
+    Tidak ada jadwal mengajar hari ini.
+  </div>
+<% end %>
+
+
+<h2 class="text-lg font-semibold mb-4 px-4">Jadwal Lengkap</h2>
+
+<% days_order = %w[Senin Selasa Rabu Kamis Jumat Sabtu] %>
+
+<div class="grid gap-x-4 gap-y-6 px-4">
+  <% days_order.each_slice(2) do |day_pair| %>
+    <% day_pair.each do |day| %>
+      <% schedules = @schedules_by_day[day] %>
+      <% if schedules.present? %>
+        <div class="mb-4 bg-white rounded-lg shadow">
+          <h3 class="font-semibold text-sm md:text-md mb-2 pt-4 px-4 text-slate-700"><%= day %></h3>
+          <div class="overflow-auto">
+            <table class="w-full text-sm text-gray-700 border-collapse">
+              <thead>
+                <tr class="bg-white text-slate-700 text-center uppercase text-xs md:text-sm">
+                  <th class="p-3 border-b">No</th>
+                  <th class="p-3 border-b">Jam</th>
+                  <th class="p-3 border-b">Kelas</th>
+                  <th class="p-3 border-b">Mata Pelajaran</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <% schedules.each_with_index do |schedule, i| %>
+                  <tr class="hover:bg-blue-50 text-center">
+                    <td class="p-3"><%= i + 1 %></td>
+                    <td class="p-3 whitespace-nowrap"><%= schedule.time_text %></td>
+                    <td class="p-3"><%= schedule.class_room_name %></td>
+                    <td class="p-3"><%= schedule.subject_name %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+<!--
+<div class="p-4">
+  <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-slate-50 dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+    <h2 id="accordion-flush-heading-1">
+      <button type="button" class="flex items-center justify-between w-full p-2 rounded font-medium rtl:text-right text-gray-700 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-1" aria-expanded="false" aria-controls="accordion-flush-body-1">
+        <span>Biodata</span>
+        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+        </svg>
+      </button>
+    </h2>
+    <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
+      <div class="py-5 border-b border-gray-200 dark:border-gray-700 p-x2">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-700 dark:text-gray-300">
+          <div>
+            <p class="font-semibold text-sm md:text-base">Nama Lengkap:</p>
+            <p class="text-sm md:text-base capitalize"><%= @teacher.teacher.nama %></p>
+          </div>
+
+          <div>
+            <p class="font-semibold text-sm md:text-base">NIK:</p>
+            <p class="text-sm md:text-base"><%= @teacher.teacher.NIK %></p>
+          </div>
+          <div>
+            <p class="font-semibold text-sm md:text-base">NIP:</p>
+            <p class="text-sm md:text-base"><%= @teacher.teacher.NIP %></p>
+          </div>
+          <div>
+            <p class="font-semibold text-sm md:text-base">Jenis Kelamin:</p>
+            <p class="text-sm md:text-base"><%= format_gender(@teacher.teacher.jk) %></p>
+          </div>
+          <div>
+            <p class="font-semibold text-sm md:text-base">Agama:</p>
+            <p class="text-sm md:text-base capitalize"><%= @teacher.teacher.agama %></p>
+          </div>
+          <div>
+            <p class="font-semibold text-sm md:text-base capitalize">Tempat, Tanggal Lahir:</p>
+            <p class="text-sm md:text-base"><%= @teacher.teacher.tempat_lahir %>, <%= @teacher.teacher.tanggal_lahir %></p>
+          </div>
+          <div>
+            <p class="font-semibold text-sm md:text-base">Alamat:</p>
+            <p class="text-sm md:text-base"><%= @teacher.teacher.alamat %></p>
+          </div>
+
+          <div>
+            <p class="font-semibold text-sm md:text-base">Nomor HP:</p>
+            <p class="text-sm md:text-base"><%= @teacher.teacher.phone %></p>
+          </div>
+
+          <div>
+            <p class="font-semibold text-sm md:text-base">Jenjang Pendidikan:</p>
+            <p class="text-sm md:text-base"><%= @teacher.teacher.jenjang %></p>
+          </div>
+          <div>
+            <p class="font-semibold text-sm md:text-base capitalize">Program Studi:</p>
+            <p><%= @teacher.teacher.prodi %></p>
+          </div>
+          <div>
+            <p class="font-semibold text-sm md:text-base">Tahun Lulus:</p>
+            <p><%= @teacher.teacher.tahun_lulus %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+-->
+
+
+
+
+<div id="edit-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="relative p-4 w-full max-w-xs">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="flex items-center justify-between p-4 border-b">
+            <h3 class="text-sm md:text-lg font-semibold">Edit Akun</h3>
+            <button type="button" class="text-gray-400 hover:text-gray-900" onclick="closeEdit()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            </button>
+        </div>
+            <%= form_with(model: @user, url: user_path(@user), method: :patch) do |f| %>
+              <div class="p-4">
+                  <div class="mb-4 grid gap-4 grid-cols-4">
+                      <div class=" col-span-4">
+                          <%= f.label :email, "Email", class: "block mb-2 text-xs md:text-sm font-medium #{@user.errors[:email].any? ? 'text-red-700' : ''  }" %>
+                          <%= f.text_field :email, class: "bg-gray-50 w-full border text-xs md:text-sm rounded-lg block w-full p-2.5
+                              #{@user.errors[:email].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                              
+                          <% if @user.errors[:email].any? %>
+                          <div class="p-2 w-full text-red-700 text-xs md:text-sm"> 
+                              <%= @user.errors[:email].first %>
+                          </div>
+                          <% end %>
+                      </div>
+                      <div class=" col-span-4">
+                          <%= f.label :password, "Kata sandi", class: "block mb-2 text-xs md:text-sm font-medium #{@user.errors[:password].any? ? 'text-red-700' : ''  }" %>
+                          <%= f.password_field :password, class: "bg-gray-50 w-full border text-xs md:text-sm rounded-lg block w-full p-2.5
+                              #{@user.errors[:password].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                              
+                          <% if @user.errors[:password].any? %>
+                          <div class=" p-2 w-full text-red-700 text-xs md:text-sm"> 
+                              <%= @user.errors[:password].first %>
+                          </div>
+                          <% end %>
+                      </div>
+                      <div class=" col-span-4">
+                          <%= f.label :password_confirmation, "Konfirmasi kata sandi", class: "block mb-2 text-xs md:text-sm font-medium #{@user.errors[:password_confirmation].any? ? 'text-red-700' : ''  }" %>
+                          <%= f.password_field :password_confirmation, class: "bg-gray-50 w-full border text-xs md:text-sm rounded-lg block w-full p-2.5
+                              #{@user.errors[:password_confirmation].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                              
+                          <% if @user.errors[:password_confirmation].any? %>
+                          <div class="p-2 w-full text-red-700 text-xs md:text-sm"> 
+                              <%= @user.errors[:password_confirmation].first %>
+                          </div>
+                          <% end %>
+                      
+                      </div>
+                  </div>
+                  <p id="helper-text-explanation" class="leading-none w-full my-2 text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                    Kosongkan kata sandi jika anda tidak ingin merubahnya.
+                  </p>
+                
+
+                  <%= f.submit "Simpan", class: "text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center" %>
+              </div>
+          <% end %>
+        </div>
+    </div>
+</div>
+
+<!--
+<div id="edit-modal-bio" class="overflow-auto hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="relative p-4 w-full max-w-xl max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="flex items-center justify-between p-4 border-b">
+            <h3 class="text-sm md:text-lg font-semibold">Edit Biodata</h3>
+            <button type="button" class="text-gray-400 hover:text-gray-900" onclick="closeEditBio()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            </button>
+        </div>
+           <%= form_with(model: @teacher, local: true) do |f| %>
+            <div class="p-4 md:p-5">
+              <div class="grid gap-1 md:gap-4 mb-4 grid-cols-4">
+                <div class="col-span-2">
+                  <%= f.label :nama, "Nama", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:nama].any? ? 'text-red-700' : ''}" %>
+                  <%= f.text_field :nama, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                      #{@teacher.errors[:nama].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                  
+                  <% if @teacher.errors[:nama].any? %>
+                    <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+                      <%= @teacher.errors[:nama].first %>
+                    </div>
+                  <% end %>
+                </div>
+                
+                <div class="col-span-2">
+                  <%= f.label :NIK, "NIK", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:NIK].any? ? 'text-red-700' : ''}" %>
+                  <%= f.text_field :NIK, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                      #{@teacher.errors[:NIK].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                  
+                  <% if @teacher.errors[:NIK].any? %>
+                    <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+                      <%= @teacher.errors[:NIK].first %>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="col-span-2">
+                  <%= f.label :NIP, "NIP", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:NIP].any? ? 'text-red-700' : ''}" %>
+                  <%= f.text_field :NIP, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                      #{@teacher.errors[:NIP].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                  
+                  <% if @teacher.errors[:NIP].any? %>
+                    <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+                      <%= @teacher.errors[:NIP].first %>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="col-span-2">
+                  <%= f.label :tempat_lahir, "Tempat Lahir", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:tempat_lahir].any? ? 'text-red-700' : ''}" %>
+                  <%= f.text_field :tempat_lahir, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                      #{@teacher.errors[:tempat_lahir].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                  
+                  <% if @teacher.errors[:tempat_lahir].any? %>
+                    <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+                      <%= @teacher.errors[:tempat_lahir].first %>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="col-span-2">
+                  <%= f.label :tanggal_lahir, "Tanggal Lahir", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:tanggal_lahir].any? ? 'text-red-700' : ''}" %>
+                  <%= f.text_field :tanggal_lahir, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                      #{@teacher.errors[:tanggal_lahir].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                  
+                  <% if @teacher.errors[:tanggal_lahir].any? %>
+                    <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+                      <%= @teacher.errors[:tanggal_lahir].first %>
+                    </div>
+                  <% end %>
+                </div>
+
+                  <div class="col-span-2">
+                      <%= f.label :agama, "Agama", class: "block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white" %>
+                      <%= f.select :agama,
+                        options_for_select([
+                            ['Islam', 'islam'],
+                            ['Kristen', 'kristen'],
+                            ['Hindu', 'hindu'],
+                            ['Buddha', 'buddha'],
+                            ['Konghucu', 'konghucu']
+                          ], selected: @teacher.teacher.agama),
+                          {},
+                          class: "bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
+                      %>
+                  </div>
+                  <div class="col-span-2">
+                      <%= f.label :jk, "Jenis Kelamin", class: "block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white" %>
+                      <%= f.select :jk,
+                          options_for_select([
+                              ['Laki-laki', 'L'],
+                              ['Perempuan', 'P'],
+                          ], selected: @teacher.teacher.agama),
+                          {},
+                          class: "bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
+                      %>
+                  </div>
+
+                  <div class="col-span-2">
+                    <%= f.label :phone, "Nomor Telepon", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:phone].any? ? 'text-red-700' : ''}" %>
+                    <%= f.text_field :phone, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                        #{@teacher.errors[:phone].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                    
+                    <% if @teacher.errors[:phone].any? %>
+                      <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+                        <%= @teacher.errors[:phone].first %>
+                      </div>
+                    <% end %>
+                  </div>
+
+                  <div class="col-span-4">
+                    <%= f.label :alamat, "Alamat Rumah Saat Ini", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:alamat].any? ? 'text-red-700' : ''}" %>
+                    <%= f.text_area :alamat, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                        #{@teacher.errors[:alamat].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                    
+                    <% if @teacher.errors[:alamat].any? %>
+                      <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+                        <%= @teacher.errors[:alamat].first %>
+                      </div>
+                    <% end %>
+                  </div>
+
+                  <div class="col-span-4">
+                      <span class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Pendidikan Terakhir</span>
+                  </div>
+                  <div class="col">
+                      <%= f.label :jenjang, "Jenjang", class: "block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white" %>
+                      <%= f.select :jenjang,
+                          options_for_select([
+                            ['Strata 1', 'S1'],
+                            ['Strata 2', 'S2'],
+                            ['Diploma 4', 'D4']
+                          ], selected: params[:jenjang]),
+                          {},
+                          class: "bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
+                      %>
+                  </div>
+
+                  <div class="col-span-2">
+                    <%= f.label :prodi, "Program Studi", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:prodi].any? ? 'text-red-700' : ''}" %>
+                    <%= f.text_field :prodi, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                        #{@teacher.errors[:prodi].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                    
+                    <% if @teacher.errors[:prodi].any? %>
+                      <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+                        <%= @teacher.errors[:prodi].first %>
+                      </div>
+                    <% end %>
+                  </div>
+
+                  <div class="col">
+                    <%= f.label :tahun_lulus, "Tahun Lulus", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:tahun_lulus].any? ? 'text-red-700' : ''}" %>
+                    <%= f.text_field :tahun_lulus, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                        #{@teacher.errors[:tahun_lulus].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                    
+                    <% if @teacher.errors[:tahun_lulus].any? %>
+                      <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+                        <%= @teacher.errors[:tahun_lulus].first %>
+                      </div>
+                    <% end %>
+                  </div>
+              </div>
+
+              <%= f.submit "Simpan", class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+            </div>
+          <% end %>
+
+
+        </div>
+    </div>
+</div>
+-->
+
+<script>
+  document.getElementById("edit-user-btn").addEventListener("click", function (event) {
+    event.preventDefault(); // Cegah navigasi link
+    document.getElementById("edit-modal").classList.remove("hidden");
+  });
+
+  function closeEdit() {
+    document.getElementById("edit-modal").classList.add("hidden");
+  }
+
+  document.getElementById("edit-bio-btn").addEventListener("click", function (event) {
+    event.preventDefault(); // Cegah navigasi link
+    document.getElementById("edit-modal-bio").classList.remove("hidden");
+  });
+
+  function closeEditBio() {
+    document.getElementById("edit-modal-bio").classList.add("hidden");
+  }
+</script>
+
+
+

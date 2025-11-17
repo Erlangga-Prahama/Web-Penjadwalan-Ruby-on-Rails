@@ -1,0 +1,101 @@
+
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-8">
+  <div class="w-full md:w-auto">
+    <% if current_user&.waka_kurikulum? %>
+        <%= link_to new_user_path, data: { turbo_stream: true }, class: "text-xs md:text-sm text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-md shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 " do %>
+            Tambah Akun
+        <% end %>
+    <% end %> 
+  </div>
+  <div class="w-full md:w-auto">
+    <%= form_with url: users_path, method: :get, local: true, class: "flex w-full md:w-auto" do %>
+      <input type="text" name="q" placeholder="Cari..." value="<%= params[:q] %>" class="px-3 py-2 border border-gray-300 rounded-l-md text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full md:w-auto" />
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white text-xs md:text-sm rounded-r-md hover:bg-blue-700">
+        Cari
+      </button>
+    <% end %>
+  </div>
+</div>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-7 p-1">
+    <h2 class="text-sm md:text-lg font-bold text-gray-800 dark:text-white mb-2">Daftar Akun</h2>
+    <% if @users.present? %>
+        <table class="w-full text-xs md:text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        No
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Nama Guru
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Email
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Peran
+                    </th>
+                    <% if current_user&.waka_kurikulum? %>
+                        <th scope="col" class="px-6 py-3">Aksi</th>
+                    <% end %>
+                </tr>
+            </thead>
+            <tbody class="text-xs md:text-sm">
+                <% @users.each.with_index(1) do |u, index|  %>
+                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <th scope="col" class="px-6 py-3 text-gray-900">
+                            <%= index %>
+                        </th>
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 wditespace-nowrap dark:text-white">
+                            <%= u.teacher&.nama %>
+                        </td>
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 wditespace-nowrap dark:text-white">
+                            <%= u.email %>
+                        </td>
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 wditespace-nowrap dark:text-white">
+                            <%= u.role.humanize %>
+                        </td>
+                        <% if current_user&.waka_kurikulum? %>
+                            <td class="px-6 py-4 flex items-center space-x-2">
+                                <%= link_to edit_user_path(u), data: { turbo_stream: true } do %>
+                                    <svg class="w-6 h-6 text-yellow-400 dark:text-white transition hover:scale-110 hover:text-yellow-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                    </svg>
+                                <% end %>
+
+                                <%= link_to user_path(u), data: {
+                                        turbo_method: :delete,
+                                        turbo_confirm: "Anda yakin ingin menghapus data?"
+                                    } do %>
+                                        <svg class="w-6 h-6 transition hover:scale-110 text-red-500 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                        </svg>
+                                <% end %>
+                            </td>
+                        <% end %>
+                        
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    <% else %>
+        <div class="text-center text-2xl my-4 font-bold">
+            Belum ada data
+        </div>
+    <% end %>
+</div>
+<% if @users.total_pages > 1 %>
+    <div class="mt-4 flex justify-center">
+        <%= paginate @users %>
+    </div>
+<% end %>  
+
+<div id="new"></div>
+<div id="edit"></div>
+
+<% if @show_new_modal %>
+  <%= render 'new', subject: @subject %>
+<% end %>
+<% if @show_edit_modal %>
+  <%= render 'edit', subject: @subject %>
+<% end %>

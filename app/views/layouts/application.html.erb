@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AppPenjadwalan</title>
+    <title>Penjadwalan SMPN 41 Kota Bekasi</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,6 +13,7 @@
 
   <body>
     <main>
+      <%= render 'shared/flash_messages' %>
       <%= yield %>
     </main>
   </body>

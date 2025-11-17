@@ -1,0 +1,6 @@
+:queues:
+  - scheduling
+  - default
+
+:concurrency: 5
+:timeout: 30

@@ -1,19 +1,42 @@
-<h1>Reset Password</h1>
+<div class="bg-slate-50 min-h-screen flex items-center justify-center">
+  <div class="bg-white m-auto w-72 md:w-80 px-6 py-6 rounded shadow-lg">
+    <h1 class="text-2xl font-bold text-gray-700 text-center mb-9">Reset Kata Sandi</h1>
 
-<%= form_with(model: @user, url: password_reset_path(params[:id]), local: true) do |f| %>
-  <%= render 'shared/error_messages' %>
+    <%= form_with(model: @user, url: password_reset_path(params[:id]), local: true) do |f| %>
+      <%= hidden_field_tag :email, @user.email %>
 
-  <%= hidden_field_tag :email, @user.email %>
+      <div class="grid gap-6 mb-6">
+        <div>
+          <%= f.label :password, "Kata Sandi Baru", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+          <%= f.password_field :password, 
+              class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+                      dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+                      dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+        </div>
 
-  <div>
-    <%= f.label :password %>
-    <%= f.password_field :password, class: 'form-control' %>
+        <div>
+          <%= f.label :password_confirmation, "Konfirmasi Kata Sandi", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+          <%= f.password_field :password_confirmation, 
+              class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+                      dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+                      dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <%= f.submit "Perbarui Kata Sandi", 
+            class: "text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 
+                    hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 
+                    dark:focus:ring-blue-800 shadow shadow-blue-500/50 
+                    dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg 
+                    w-full text-sm px-5 py-2.5 text-center mb-2" %>
+      </div>
+    <% end %>
+
+    <p class="block mt-2 text-sm font-medium text-gray-900 dark:text-white text-center">
+      <%= link_to "Kembali ke login", masuk_path, class: "text-blue-600 hover:underline" %>
+    </p>
   </div>
-
-  <div>
-    <%= f.label :password_confirmation, "Confirmation" %>
-    <%= f.password_field :password_confirmation, class: 'form-control' %>
-  </div>
-
-  <%= f.submit "Update password", class: "btn btn-primary" %>
-<% end %>
+</div>

@@ -1,2 +1,6 @@
-web: bin/rails server
-css: bin/rails tailwindcss:watch
+web: rails server
+css: rails tailwindcss:watch
+redis: redis-server     
+sidekiq: bundle exec sidekiq -C config/sidekiq.yml 
+
+

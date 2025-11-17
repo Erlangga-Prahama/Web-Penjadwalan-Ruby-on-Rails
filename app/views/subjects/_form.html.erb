@@ -1,0 +1,56 @@
+<%= form_with(model: subject) do |f| %>
+  <div class="p-4 grid grid-cols-3 gap-4 text-xs md:text-md">
+    
+    <!-- Nama Mata Pelajaran -->
+    <div class="col-span-2">
+      <%= f.label :name, "Mata Pelajaran", class: "block mb-2 text-xs md:text-sm font-medium #{@subject.errors[:name].any? ? 'text-red-700' : ''}" %>
+      <%= f.text_field :name, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5 #{@subject.errors[:name].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+      <% if @subject.errors[:name].any? %>
+        <div class="text-red-600 text-xs mt-1">
+          <%= @subject.errors[:name].first %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Kode -->
+    <div>
+      <%= f.label :code, "Kode", class: "block mb-2 text-xs md:text-sm font-medium #{@subject.errors[:code].any? ? 'text-red-700' : ''}" %>
+      <%= f.text_field :code, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5 #{@subject.errors[:code].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+      <% if @subject.errors[:code].any? %>
+        <div class="text-red-600 text-xs mt-1">
+          <%= @subject.errors[:code].first %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Jumlah Pertemuan per Kelas -->
+    <div class="col-span-3">
+      <label class="block mb-2 text-xs md:text-sm font-medium">Jumlah Pertemuan per Kelas</label>
+      <div class="grid grid-cols-3 gap-2">
+        <% [7, 8, 9].each do |grade| %>
+          <% sg = subject.subject_grades.find { |g| g.grade == grade } || subject.subject_grades.build(grade: grade) %>
+          <div>
+            <%= f.fields_for :subject_grades, sg do |sgf| %>
+              <%= sgf.hidden_field :grade %>
+              <span class="block mb-1 text-xs md:text-sm font-medium">Kelas <%= grade %></span>
+              <%= sgf.number_field :weekly_sessions, placeholder: "0", class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Checkbox Aktif (Hanya saat Edit) -->
+    <% if subject.persisted? %>
+      <div class="col-span-3">
+        <%= f.check_box :is_active, class: "mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
+        <%= f.label :is_active, "Aktif", class: "text-xs md:text-sm font-medium" %>
+      </div>
+    <% end %>
+
+    <!-- Submit -->
+    <div class="col-span-3 mt-4">
+      <%= f.submit "Simpan", class: "text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5" %>
+    </div>
+  </div>
+<% end %>

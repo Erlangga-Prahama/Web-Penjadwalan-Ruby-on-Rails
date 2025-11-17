@@ -1,0 +1,209 @@
+<%= form_with(model: @teacher, local: true) do |f| %>
+  <div class="p-4 md:p-5">
+    <div class="grid gap-1 md:gap-3 mb-4 grid-cols-4">
+      <div class="col-span-2">
+        <%= f.label :nama, "Nama", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:nama].any? ? 'text-red-700' : ''}" %>
+        <%= f.text_field :nama, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+            #{@teacher.errors[:nama].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+        
+        <% if @teacher.errors[:nama].any? %>
+          <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+            <%= @teacher.errors[:nama].first %>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="col-span-2">
+        <%= f.label :NIK, "NIK", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:NIK].any? ? 'text-red-700' : ''}" %>
+        <%= f.text_field :NIK, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+            #{@teacher.errors[:NIK].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+        
+        <% if @teacher.errors[:NIK].any? %>
+          <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+            <%= @teacher.errors[:NIK].first %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-span-2">
+        <%= f.label :NIP, "NIP", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:NIP].any? ? 'text-red-700' : ''}" %>
+        <%= f.text_field :NIP, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+            #{@teacher.errors[:NIP].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+        
+        <% if @teacher.errors[:NIP].any? %>
+          <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+            <%= @teacher.errors[:NIP].first %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- SUBJECTS WITH FLOWBITE DROPDOWN CHECKBOX -->
+      <div class="col-span-2">
+        <%= f.label :subject_ids, "Mata Pelajaran", class: "block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white" %>
+
+          <div data-controller="subject-selector">
+            <button type="button" id="dropdownMapelButton" data-dropdown-toggle="dropdownMapel" class="bg-gray-50 border border-gray-300 focus:ring-1 focus:outline-none focus:ring-primary-600 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full justify-between">
+              <span data-subject-selector-target="output">Pilih Mapel</span>
+              <svg class="w-2.5 h-2.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m1 1 4 4 4-4" />
+              </svg>
+            </button>
+
+            <div id="dropdownMapel" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 mt-2">
+              <ul class="p-1 space-y-2 text-xs md:text-sm text-gray-700 dark:text-gray-200">
+                <% Subject.all.each do |subject| %>
+                  <li>
+                    <%= check_box_tag "teacher[subject_ids][]", subject.id, @teacher.subject_ids.include?(subject.id), id: "subject_#{subject.id}", data: { subject_selector_target: "checkbox", action: "subject-selector#updateText" }, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" %>
+                    <%= label_tag "subject_#{subject.id}", subject.name, class: "ml-2 text-xs md:text-sm font-medium text-gray-900 dark:text-gray-300" %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+
+        <!-- Tombol dropdown -->
+
+      </div>
+
+      <!-- Lanjutkan field lainnya seperti biasa -->
+      <div class="col-span-2">
+        <%= f.label :tempat_lahir, "Tempat Lahir", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:tempat_lahir].any? ? 'text-red-700' : ''}" %>
+        <%= f.text_field :tempat_lahir, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+            #{@teacher.errors[:tempat_lahir].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+        
+        <% if @teacher.errors[:tempat_lahir].any? %>
+          <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+            <%= @teacher.errors[:tempat_lahir].first %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-span-2">
+        <%= f.label :tanggal_lahir, "Tanggal Lahir", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:tanggal_lahir].any? ? 'text-red-700' : ''}" %>
+        <%= f.text_field :tanggal_lahir, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+            #{@teacher.errors[:tanggal_lahir].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+        
+        <% if @teacher.errors[:tanggal_lahir].any? %>
+          <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+            <%= @teacher.errors[:tanggal_lahir].first %>
+          </div>
+        <% end %>
+      </div>
+
+        <div class="col-span-2">
+            <%= f.label :agama, "Agama", class: "block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.select :agama,
+               options_for_select([
+                  ['Islam', 'islam'],
+                  ['Kristen', 'kristen'],
+                  ['Hindu', 'hindu'],
+                  ['Buddha', 'buddha'],
+                  ['Konghucu', 'konghucu']
+                ], selected: @teacher.agama),
+                {},
+                class: "bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
+            %>
+        </div>
+        <div class="col-span-2">
+            <%= f.label :jk, "Jenis Kelamin", class: "block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.select :jk,
+                options_for_select([
+                    ['Laki-laki', 'L'],
+                    ['Perempuan', 'P'],
+                ], selected: @teacher.jk),
+                {},
+                class: "bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
+            %>
+        </div>
+
+        <div class="col-span-2">
+          <%= f.label :phone, "Nomor Telepon", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:phone].any? ? 'text-red-700' : ''}" %>
+          <%= f.text_field :phone, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+              #{@teacher.errors[:phone].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+          
+          <% if @teacher.errors[:phone].any? %>
+            <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+              <%= @teacher.errors[:phone].first %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="col-span-4">
+          <%= f.label :alamat, "Alamat Rumah Saat Ini", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:alamat].any? ? 'text-red-700' : ''}" %>
+          <%= f.text_area :alamat, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+              #{@teacher.errors[:alamat].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+          
+          <% if @teacher.errors[:alamat].any? %>
+            <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+              <%= @teacher.errors[:alamat].first %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="col-span-4">
+            <span class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Pendidikan Terakhir</span>
+        </div>
+        <div class="col">
+            <%= f.label :jenjang, "Jenjang", class: "block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white" %>
+            <%= f.select :jenjang,
+                options_for_select([
+                    ['Strata 1', 'S1'],
+                    ['Strata 2', 'S2'],
+                    ['Diploma 3', 'D3'],
+                    ['Diploma 4', 'D4']
+                ], selected: params[:jenjang]),
+                {},
+                class: "bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
+            %>
+        </div>
+
+        <div class="col-span-2">
+          <%= f.label :prodi, "Program Studi", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:prodi].any? ? 'text-red-700' : ''}" %>
+          <%= f.text_field :prodi, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+              #{@teacher.errors[:prodi].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+          
+          <% if @teacher.errors[:prodi].any? %>
+            <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+              <%= @teacher.errors[:prodi].first %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="col">
+          <%= f.label :tahun_lulus, "Tahun Lulus", class: "block mb-2 text-xs md:text-sm font-medium #{@teacher.errors[:tahun_lulus].any? ? 'text-red-700' : ''}" %>
+          <%= f.text_field :tahun_lulus, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+              #{@teacher.errors[:tahun_lulus].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+          
+          <% if @teacher.errors[:tahun_lulus].any? %>
+            <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"> 
+              <%= @teacher.errors[:tahun_lulus].first %>
+            </div>
+          <% end %>
+        </div>
+      <!--
+      <% if @teacher.persisted? %>
+        <div class="col-span-2">
+          <%= f.label :cuti, "Sedang Cuti?", class: "block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white" %>
+          <div class="flex items-center">
+            <%= f.check_box :cuti, { class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600", checked: @teacher.cuti == "true" }, "true", "false" %>
+            <label for="teacher_cuti" class="ml-2 text-xs md:text-sm text-gray-900 dark:text-gray-300">
+              Tandai jika guru sedang cuti
+            </label>
+          </div>
+        </div>
+      <% end %>
+      -->
+        <% if @teacher.persisted? %>
+          <div class="col-span-4">
+              <%= f.check_box :is_active, class: "mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
+              <%= f.label :is_active, "Aktif", class: "text-xs md:text-sm font-medium" %>
+          </div>
+        <% end %>
+    </div>
+
+    <%= f.submit "Simpan", class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+  </div>
+<% end %>
+

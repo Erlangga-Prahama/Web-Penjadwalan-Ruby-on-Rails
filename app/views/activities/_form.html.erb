@@ -1,0 +1,92 @@
+<%= form_with(model: activity, data: { controller: "timeblock" }) do |f| %>
+  <div class="p-4 grid grid-cols-2 gap-4">
+
+    <!-- Nama Kegiatan -->
+    <div>
+      <%= f.label :name, "Kegiatan", class: "block mb-2 text-xs md:text-sm font-medium #{activity.errors[:name].any? ? 'text-red-700' : ''}" %>
+      <%= f.text_field :name, class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5
+        #{activity.errors[:name].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+
+      <% if activity.errors[:name].any? %>
+        <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"><%= activity.errors[:name].first %></div>
+      <% end %>
+    </div>
+
+    <!-- Kelas / Grade -->
+    <div>
+      <%= f.label :grade, "Kelas", class: "block mb-2 text-xs md:text-sm font-medium" %>
+      <%= f.select :grade,
+          options_for_select([['7', '7'], ['8', '8'], ['9', '9']], selected: activity.grade),
+          {},
+          class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5 text-gray-900",
+          data: { timeblock_target: "gradeSelect", action: "change->timeblock#update" } %>
+
+
+      <% if activity.errors[:grade].any? %>
+        <div class="mb-2 p-2 text-red-700 text-xs md:text-sm"><%= activity.errors[:grade].first %></div>
+      <% end %>
+    </div>
+
+<div class="col-span-2 gap-3">
+  <!-- Hari -->
+  <div class="mb-3">
+    <%= f.label :day, "Hari", class: "block mb-2 text-xs md:text-sm font-medium" %>
+    <%= f.select :day,
+        options_for_select(Day.pluck(:name), selected: activity.day),
+        {},
+        class: "bg-gray-50 border text-xs md:text-sm rounded-lg block w-full p-2.5 text-gray-900",
+        id: "select-day",
+        data: { timeblock_target: "daySelect", action: "change->timeblock#update" } %>
+  </div>
+
+  <!-- TimeBlock berdasarkan Hari dan Session -->
+  <div class="">
+    <label class="mb-2 text-xs md:text-sm font-medium">Pilih Jam</label>
+    <div id="timeblock-container">
+      <% time.group_by(&:day).each do |day, time_blocks_by_day| %>
+        <% grouped_by_session = time_blocks_by_day.group_by(&:session) %>
+
+        <% ['pagi', 'siang'].each do |session| %>
+          <% next unless grouped_by_session[session] %>
+          <% tbs = grouped_by_session[session] %>
+
+          <div
+            data-timeblock-target="timeblock"
+            data-day="<%= day.name.downcase %>"
+            data-session="<%= session %>"
+            class="timeblock-day hidden bg-gray-50 rounded-lg p-3 mb-2 shadow-sm">
+
+            <h3 class="text-xs md:text-sm font-semibold mb-2 capitalize">
+              <%= "#{session.capitalize}" %>
+            </h3>
+
+            <% tbs.each do |tb| %>
+              <div class="flex items-center mb-1">
+                <%= check_box_tag "activity[time_block_ids][]", tb.id, activity.time_block_ids.include?(tb.id), id: "tb_#{tb.id}", class: "me-2" %>
+                <%= label_tag "tb_#{tb.id}", tb.time, class: "text-xs md:text-sm text-gray-700" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+
+    </div>
+  </div>
+  <% if activity.persisted? %>
+    <div class="col-span-2">
+        <%= f.check_box :is_active, class: "mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" %>
+        <%= f.label :is_active, "Aktif", class: "text-xs md:text-sm font-medium" %>
+    </div>
+  <% end %>
+</div>
+
+
+    <!-- Tombol Submit -->
+    <div class="col-span-2">
+      <%= f.submit "Simpan", class: "text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5" %>
+    </div>
+  </div>
+
+<% end %>
+
+

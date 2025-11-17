@@ -1,7 +1,73 @@
-<button type="button" class="text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-md shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-1.5 text-center me-2 mb-2 ">
-    <svg class="w-6 h-6 text-white dark:text-white inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+<%= link_to teachers_path, class: "text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-md shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-1.5 text-center me-2 mb-2" do %>
+    <svg class="w-6 h-6 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
     </svg>
-Kembali
-</button>
-<h1 class="font-bold text-lg">Detail Guru</h1>
+    Kembali
+<% end %>
+<h1 class="font-bold mt-3 text-lg">Detail Guru</h1>
+<div class="py-5 border-b border-gray-200 dark:border-gray-700 p-x2">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
+
+    <div>
+      <p class="font-semibold text-sm md:text-base">Nama Lengkap:</p>
+      <p class="text-sm md:text-base capitalize"><%= @teacher.nama %></p>
+    </div>
+
+    <% if @teacher.NIK.present? %>
+      <div>
+        <p class="font-semibold text-sm md:text-base">NIK:</p>
+        <p class="text-sm md:text-base"><%= @teacher.NIK %></p>
+      </div>
+    <% end %>
+
+    <% if @teacher.NIP.present? %>
+      <div>
+        <p class="font-semibold text-sm md:text-base">NIP:</p>
+        <p class="text-sm md:text-base"><%= @teacher.NIP %></p>
+      </div>
+    <% end %>
+
+    <div>
+      <p class="font-semibold text-sm md:text-base">Jenis Kelamin:</p>
+      <p class="text-sm md:text-base"><%= format_gender(@teacher.jk) %></p>
+    </div>
+
+    <div>
+      <p class="font-semibold text-sm md:text-base">Agama:</p>
+      <p class="text-sm md:text-base capitalize"><%= @teacher.agama %></p>
+    </div>
+
+    <div>
+      <p class="font-semibold text-sm md:text-base capitalize">Tempat, Tanggal Lahir:</p>
+      <p class="text-sm md:text-base"><%= @teacher.tempat_lahir %>, <%= @teacher.tanggal_lahir %></p>
+    </div>
+
+    <div>
+      <p class="font-semibold text-sm md:text-base">Alamat:</p>
+      <p class="text-sm md:text-base"><%= @teacher.alamat %></p>
+    </div>
+
+    <div>
+      <p class="font-semibold text-sm md:text-base">Nomor HP:</p>
+      <p class="text-sm md:text-base"><%= @teacher.phone %></p>
+    </div>
+
+    <div>
+      <p class="font-semibold text-sm md:text-base">Jenjang Pendidikan:</p>
+      <p class="text-sm md:text-base"><%= @teacher.jenjang %></p>
+    </div>
+
+    <div>
+      <p class="font-semibold text-sm md:text-base capitalize">Program Studi:</p>
+      <p><%= @teacher.prodi %></p>
+    </div>
+
+    <% if @teacher.tahun_lulus.present? %>
+      <div>
+        <p class="font-semibold text-sm md:text-base">Tahun Lulus:</p>
+        <p><%= @teacher.tahun_lulus %></p>
+      </div>
+    <% end %>
+
+  </div>
+</div>

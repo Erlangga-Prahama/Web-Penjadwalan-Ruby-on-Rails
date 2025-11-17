@@ -1,0 +1,127 @@
+def excel_column_name(n)
+  name = ""
+  while n > 0
+    n, r = (n - 1).divmod(26)
+    name.prepend((65 + r).chr)
+  end
+  name
+end
+
+def center_style(sheet, sz: 12, bold: true)
+  sheet.styles.add_style(
+    b: bold,
+    sz: sz,
+    alignment: { horizontal: :center, vertical: :center }
+  )
+end
+
+workbook = xlsx_package.workbook
+
+ordered_days = Day.order(:id)
+all_time_blocks = TimeBlock.includes(:day).order(:day_id, :order).group_by { |tb| [tb.day_id, tb.session] }
+
+(7..9).each do |grade|
+  class_names = @schedules.keys.select { |name| name.start_with?(grade.to_s) }.sort
+  next if class_names.empty?
+  session_type = grade == 7 ? 'siang' : 'pagi'
+
+  sheet = workbook.add_worksheet(name: "Kelas #{grade}")
+
+  total_columns = 2 + class_names.size
+  last_col = excel_column_name(total_columns)
+
+  sheet.merge_cells("A1:#{last_col}1")
+  sheet.add_row [ "SMP NEGERI 41 KOTA BEKASI".upcase ], style: center_style(sheet, sz: 14)
+
+  sheet.merge_cells("A2:#{last_col}2")
+  sheet.add_row [ "JADWAL PEMBELAJARAN SEMESTER #{@batch.name} TAHUN #{@batch.year}".upcase ], style: center_style(sheet)
+
+  sheet.add_row [] # baris kosong
+
+  sheet.add_row ["Jadwal Kelas #{grade}"], sz: 12, b: true
+  sheet.add_row []
+
+  header = ["Hari", "Jam"] + class_names
+  header_style = sheet.styles.add_style(b: true, bg_color: 'DDDDDD', alignment: { horizontal: :center })
+  sheet.add_row header, style: header_style
+  sheet.column_widths 7, 12, *Array.new(class_names.size, 15)
+
+  @days.each_with_index do |day, d_index|
+    time_blocks = all_time_blocks[[d_index + 1, session_type]] || []
+
+    time_blocks.each_with_index do |time_block, i|
+      row = []
+      row << (i == 0 ? day : nil)
+      row << time_block.time
+
+      class_names.each do |class_name|
+        schedules = @schedules[class_name] || []
+        entry = schedules.find { |s| s.day_name == day && s.time_text == time_block.time }
+
+        if entry.present?
+          row << (entry.activity_names.present? ? entry.activity_names : "#{entry.subject_code} / #{entry.teacher_code}")
+        else
+          row << ""
+        end
+      end
+
+      sheet.add_row row
+    end
+
+    sheet.add_row []
+  end
+end
+
+
+# Buat sheet baru untuk alokasi jam guru
+sheet = workbook.add_worksheet(name: "Alokasi Jam Guru")
+
+sheet.add_row ["Alokasi Jam Mengajar Guru"], sz: 12, b: true
+sheet.add_row []
+
+guru_mapel_pairs = @schedules.values.flatten
+                  .select { |s| s.teacher_name.present? && s.subject_name.present? }
+                  .map { |s| [s.teacher_code, s.teacher_name, s.subject_name] }
+                  .uniq
+                  .sort_by { |code, name, subject| [code.to_s, subject.to_s] }
+
+class_names = @schedules.keys.sort
+
+header = ["Kode Guru", "Nama Guru", "Mata Pelajaran"] + class_names + ["Total Kelas", "Total Jam"]
+header_style = sheet.styles.add_style(b: true, bg_color: 'DDDDDD', alignment: { horizontal: :center })
+sheet.add_row header, style: header_style
+
+# Hitung jumlah kolom kelas
+class_columns = Array.new(class_names.size, 2.5)
+
+# Kolom: Kode Guru (8), Nama Guru (20), Mapel (20), ...kelas..., Total Kelas (8), Total Jam (8)
+sheet.column_widths 8, 20, 20, *class_columns, 8, 8
+
+center_style = sheet.styles.add_style(alignment: { horizontal: :center })
+
+guru_mapel_pairs.each do |teacher_code, teacher_name, subject_name|
+  row = [teacher_code, teacher_name, subject_name]
+  total_jam = 0
+  total_kelas = 0
+
+  class_names.each do |class_name|
+    schedules = @schedules[class_name] || []
+    jumlah = schedules.count { |s| s.teacher_name == teacher_name && s.subject_name == subject_name }
+    total_jam += jumlah
+    total_kelas += 1 if jumlah > 0
+
+    row << (jumlah > 0 ? "✔" : "")
+  end
+
+  row << total_kelas
+  row << total_jam
+
+  sheet.add_row row, style: [
+    nil,                    # Kode Guru
+    nil,                    # Nama Guru
+    nil,                    # Mapel
+    *Array.new(class_names.size, center_style), # Semua kolom kelas
+    center_style,           # Total Kelas
+    center_style            # Total Jam
+  ]
+end

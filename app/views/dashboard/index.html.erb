@@ -1,104 +1,84 @@
+<div class="relative overflow-x-auto sm:rounded-lg mt-7 p-6 bg-white">
 
+  <!-- Header -->
+  <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+    <h1 class="text-lg md:text-2xl font-bold text-gray-800">Dashboard Penjadwalan</h1>
+  </div>
 
-<div class="p-4 sm:ml-64">
-   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-      <div class="grid grid-cols-3 gap-4 mb-4">
-         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
+  <!-- Ringkasan -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+    <div class="p-4 bg-blue-100 rounded-lg text-center shadow hover:shadow-md transition min-w-0">
+      <div class="flex justify-center mb-2">
+        <svg class="w-6 h-6 md:w-8 md:h-8 text-blue-800 dark:text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H6Zm7.25-2.095c.478-.86.75-1.85.75-2.905a5.973 5.973 0 0 0-.75-2.906 4 4 0 1 1 0 5.811ZM15.466 20c.34-.588.535-1.271.535-2v-1a5.978 5.978 0 0 0-1.528-4H18a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2h-4.535Z" clip-rule="evenodd"/>
+        </svg>
       </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-         </p>
+      <div class="text-lg md:text-2xl font-bold text-blue-800"><%= Teacher.count %></div>
+      <div class="text-xs md:text-sm text-gray-600 mt-1">Total Guru</div>
+    </div>
+
+    <div class="p-4 bg-green-100 rounded-lg text-center shadow hover:shadow-md transition min-w-0">
+      <div class="flex justify-center mb-2">
+        <svg class="w-6 h-6 md:w-8 md:h-8 text-green-800 dark:text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M14 19V5h4a1 1 0 0 1 1 1v11h1a1 1 0 0 1 0 2h-6Z"/>
+          <path fill-rule="evenodd" d="M12 4.571a1 1 0 0 0-1.275-.961l-5 1.428A1 1 0 0 0 5 6v11H4a1 1 0 0 0 0 2h1.86l4.865 1.39A1 1 0 0 0 12 19.43V4.57ZM10 11a1 1 0 0 1 1 1v.5a1 1 0 0 1-2 0V12a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
+        </svg>
       </div>
-      <div class="grid grid-cols-2 gap-4 mb-4">
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
+      <div class="text-lg md:text-2xl font-bold text-green-800"><%= ClassRoom.count %></div>
+      <div class="text-xs md:text-sm text-gray-600 mt-1">Total Kelas</div>
+    </div>
+
+    <div class="p-4 bg-yellow-100 rounded-lg text-center shadow hover:shadow-md transition min-w-0">
+      <div class="flex justify-center mb-2">
+        <svg class="w-6 h-6 md:w-8 md:h-8 text-yellow-800 dark:text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd" d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z" clip-rule="evenodd"/>
+        </svg>
       </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-         </p>
+      <div class="text-lg md:text-2xl font-bold text-yellow-800"><%= Subject.count %></div>
+      <div class="text-xs md:text-sm text-gray-600 mt-1">Mata Pelajaran</div>
+    </div>
+
+    <div class="p-4 bg-cyan-100 rounded-lg text-center shadow hover:shadow-md transition min-w-0">
+      <div class="flex justify-center mb-2">
+        <svg class="w-6 h-6 md:w-8 md:h-8 text-cyan-800 dark:text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd" d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" clip-rule="evenodd"/>
+        </svg>
       </div>
-      <div class="grid grid-cols-2 gap-4">
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
+      <div class="text-lg md:text-2xl font-bold text-cyan-800"><%= Schedule.where(status: 'final').distinct.count(:schedule_batch_id) %></div>
+      <div class="text-xs md:text-sm text-gray-600 mt-1">Jadwal</div>
+    </div>
+  </div>
+
+  <!-- Informasi Jadwal -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+    <% if ScheduleDraft.any? %>
+      <div class="bg-white border-l-4 border-yellow-400 p-4 rounded shadow">
+        <h2 class="md:text-lg font-semibold mb-2 text-yellow-700">Draft Jadwal</h2>
+        <p class="text-xs md:text-sm text-gray-600 mb-2">Draft jadwal siap diajukan.</p>
+        <%= link_to 'Lihat Draft Jadwal', preview_schedules_path, class: "inline-block bg-yellow-300 hover:bg-yellow-400 text-gray-800 font-semibold px-4 py-2 rounded shadow" %>
       </div>
-   </div>
+    <% end %>
+
+    <% if Schedule.where(status: 'final').exists? %>
+      <% latest_batch = Schedule.where(status: 'final').order(created_at: :desc).first.schedule_batch %>
+      <div class="bg-white border-l-4 border-green-400 p-4 rounded shadow">
+        <h2 class="md:text-lg font-semibold mb-2 text-green-700">Jadwal Mata Pelajaran Terbaru</h2>
+        <p class="text-xs md:text-sm text-gray-600 mb-2">Jadwal mata pelajaran yang telah disetujui dan siap digunakan.</p>
+        <%= link_to "Semester #{latest_batch.name} Tahun #{latest_batch.year}", schedule_path(id: latest_batch), class: "inline-block bg-green-300 hover:bg-green-400 text-gray-800 font-semibold px-4 py-2 rounded shadow" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Akses Cepat -->
+  <div class="mb-10">
+    <h2 class="md:text-lg font-semibold mb-4">Akses Cepat</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <%= link_to "Jadwal Mengajar Anda", jadwal_guru_path, class: "md:p-4 p-2 bg-green-500 hover:bg-green-600 text-white text-center md:text-base text-xs font-semibold rounded shadow" %>
+      <%= link_to "Kelola Data Guru", teachers_path, class: "md:p-4 p-2 bg-cyan-500 hover:bg-cyan-600 text-white text-center md:text-base text-xs font-semibold rounded shadow" %>
+      <%= link_to "Kelola Data Kelas", class_rooms_path, class: "md:p-4 p-2 bg-blue-500 hover:bg-blue-600 text-white text-center md:text-base text-xs font-semibold rounded shadow" %>
+      <%= link_to "Kelola Data Mata Pelajaran", subjects_path, class: "md:p-4 p-2 bg-teal-500 hover:bg-teal-600 text-white text-center md:text-base text-xs font-semibold rounded shadow" %>
+      <%= link_to "Kelola Data Jam Pelajaran", time_blocks_path, class: "md:p-4 p-2 bg-lime-500 hover:bg-lime-600 text-white text-center md:text-base text-xs font-semibold rounded shadow" %>
+      <%= link_to "Kelola Data Kegiatan", activities_path, class: "md:p-4 p-2 bg-sky-500 hover:bg-sky-600 text-white text-center md:text-base text-xs font-semibold rounded shadow" %>
+    </div>
+  </div>
 </div>
-

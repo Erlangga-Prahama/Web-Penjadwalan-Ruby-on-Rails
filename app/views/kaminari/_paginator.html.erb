@@ -1,0 +1,32 @@
+<%# Tailwind-compatible Kaminari pagination %>
+<nav class="flex justify-center mt-4">
+  <ul class="inline-flex items-center space-x-1 text-sm">
+    <% unless current_page.first? %>
+      <li>
+        <%= link_to raw("&laquo;"), url_for(page: current_page - 1), class: "px-3 py-1 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100" %>
+      </li>
+    <% end %>
+
+    <% paginator.each_page do |page| %>
+      <% if page %>
+        <% if page == current_page %>
+          <li>
+            <span class="px-3 py-1 rounded-md bg-blue-600 text-white font-semibold"><%= page %></span>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to page, url_for(page: page), class: "px-3 py-1 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100" %>
+          </li>
+        <% end %>
+      <% else %>
+        <li><span class="px-3 py-1 text-gray-500">…</span></li>
+      <% end %>
+    <% end %>
+
+    <% unless current_page.last? %>
+      <li>
+        <%= link_to raw("&raquo;"), url_for(page: current_page + 1), class: "px-3 py-1 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100" %>
+      </li>
+    <% end %>
+  </ul>
+</nav>

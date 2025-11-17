@@ -1,0 +1,127 @@
+<% if current_user&.waka_kurikulum? %>
+  <%= link_to new_activity_path, data: { turbo_stream: true }, class: "text-xs md:text-sm text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-md shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 " do %>
+      Tambah Kegiatan
+  <% end %>
+<% end %>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-7 p-1">
+  <div class="flex justify-between items-center mb-2">
+    <h2 class="text-sm md:text-lg font-bold text-gray-800 dark:text-white me-2">Daftar Kegiatan</h2>
+    <% if current_user&.waka_kurikulum? %>
+      <!-- Tombol muncul di kanan hanya untuk layar md ke atas -->
+      <div class="hidden md:flex space-x-1">
+        <%= button_to activate_all_activities_path, method: :patch,
+            data: { turbo_confirm: "Aktifkan semua kegiatan?" },
+            class: "text-xs text-green-500 font-semibold underline" do %>
+          Aktifkan Semua
+        <% end %>
+
+        <%= button_to deactivate_all_activities_path, method: :patch,
+            data: { turbo_confirm: "Non-aktifkan semua kegiatan?" },
+            class: "text-xs text-red-500 font-semibold underline" do %>
+          Non-aktifkan Semua
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <% if current_user&.waka_kurikulum? %>
+    <!-- Tombol muncul di bawah hanya untuk layar kecil -->
+    <div class="flex md:hidden space-x-1 mt-1">
+      <%= button_to activate_all_activities_path, method: :patch,
+          data: { turbo_confirm: "Aktifkan semua kegiatan?" },
+          class: "text-xs text-green-500 font-semibold underline" do %>
+        Aktifkan Semua
+      <% end %>
+
+      <%= button_to deactivate_all_activities_path, method: :patch,
+          data: { turbo_confirm: "Non-aktifkan semua kegiatan?" },
+          class: "text-xs text-red-500 font-semibold underline" do %>
+        Non-aktifkan Semua
+      <% end %>
+    </div>
+  <% end %>
+  <div class="grid grid-cols-1 gap-4 mt-4 p-4">
+    <% if @activities_grouped.present? %>
+      <% @activities_grouped.sort.each do |grade, activities_by_day| %>
+        <div class="mb-8">
+          <h2 class="text-sm md:text-xl font-bold text-gray-800 dark:text-white mb-2">Kelas <%= grade %></h2>
+
+          <% day_order.each do |day| %>
+            <% activities = activities_by_day[day] %>
+            <% next unless activities.present? %>
+
+            <div class="mb-4">
+              <h3 class="text-sm md:text-lg font-semibold text-gray-600 dark:text-gray-300 mb-1">Hari <%= day.capitalize %></h3>
+
+              <div class="overflow-x-auto rounded shadow">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th class="px-6 py-3">No</th>
+                      <th class="px-6 py-3">Kegiatan</th>
+                      <th class="px-6 py-3">Jam ke-</th>
+                      <th class="px-6 py-3 text-center">Aktif</th>
+                      <% if current_user&.waka_kurikulum? %>
+                       <th class="px-6 py-3">Aksi</th>
+                      <% end %>
+                    </tr>
+                  </thead>
+                  <tbody class="text-xs md:text-sm">
+                    <% activities.sort_by { |a| a.time_blocks.map(&:order).min || 999 }.each_with_index do |a, i| %>
+                      <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-800 dark:even:bg-gray-900 border-b dark:border-gray-700">
+                        <td class="px-6 py-3 text-gray-900 dark:text-white font-medium"><%= i + 1 %></td>
+                        <td class="px-6 py-3 text-gray-900 dark:text-white font-medium"><%= a.name %></td>
+                        <td class="px-6 py-3 text-gray-900 dark:text-white font-medium">
+                          <%= a.time_blocks.sort_by(&:order).map(&:order).join(', ') %>
+                        </td>
+                        <td>              
+                          <% if a.really_active? %>
+                            <svg class="w-5 h-5 mx-auto text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <% else %>
+                            <svg class="w-5 h-5 mx-auto text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                            </svg>
+                          <% end %>
+                        </td>
+                        <% if current_user&.waka_kurikulum? %>
+                          <td class="px-6 py-4 flex items-center space-x-2">
+                            <%= link_to edit_activity_path(a), data: { turbo_stream: true } do %>
+                                <svg class="w-6 h-6 text-yellow-400 dark:text-white transition hover:scale-110 hover:text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                </svg>
+                            <% end %>
+                            <%= link_to activity_path(a), data: { turbo_method: :delete, turbo_confirm: "Anda yakin?" } do %>
+                              <svg class="w-6 h-6 text-red-500 dark:text-white transition hover:scale-110 hover:text-red-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                              </svg>
+                          <% end %>
+                          </td>
+                        <% end %>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="text-center text-2xl font-bold mt-4">Belum ada data</div>
+    <% end %>
+  </div>
+</div>
+
+<div id="new"></div>
+<div id="edit"></div>
+
+<% if @show_new_modal %>
+  <%= render 'new', activity: @activity, time: @time %>
+<% end %>
+
+<% if @show_edit_modal %>
+  <%= render 'edit', activity: @activity, time: @time %>
+<% end %>

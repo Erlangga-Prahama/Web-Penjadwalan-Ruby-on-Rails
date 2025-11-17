@@ -1,0 +1,56 @@
+<%= form_with(model: user) do |f| %>
+    <div class="p-4">
+        <div class="mb-4 grid gap-4 grid-cols-4">
+            <div class=" col-span-4">
+                <%= f.label :teacher_id, "Pilih guru", class: "block mb-2 text-xs md:text-sm font-medium" %>
+                <%= f.select :teacher_id,
+                    @teachers.map { |t| [t.nama, t.id] },
+                    { include_blank: "Pilih guru" },
+                    class: "bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                %>
+            </div>
+            <div class="col-span-4">
+                <%= f.label :role, "Peran", class: "block mb-2 text-xs md:text-sm font-medium" %>
+                <%= f.select :role, User.roles.keys.map { |r| [r.humanize, r] }, {}, class: "bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %>
+            </div>
+            <div class=" col-span-4">
+                <%= f.label :email, "Email", class: "block mb-2 text-xs md:text-sm font-medium #{user.errors[:email].any? ? 'text-red-700' : ''  }" %>
+                <%= f.text_field :email, class: "bg-gray-50 w44 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                    #{user.errors[:email].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                    
+                <% if user.errors[:email].any? %>
+                <div class="p-2 w-full text-red-700 text-xs md:text-sm"> 
+                    <%= user.errors[:email].first %>
+                </div>
+                <% end %>
+            </div>
+            <div class=" col-span-4">
+                <%= f.label :password, "Kata sandi", class: "block mb-2 text-xs md:text-sm font-medium #{user.errors[:password].any? ? 'text-red-700' : ''  }" %>
+                <%= f.password_field :password, class: "bg-gray-50 w44 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                    #{user.errors[:password].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                    
+                <% if user.errors[:password].any? %>
+                <div class=" p-2 w-full text-red-700 text-xs md:text-sm"> 
+                    <%= user.errors[:password].first %>
+                </div>
+                <% end %>
+            </div>
+            <div class=" col-span-4">
+                <%= f.label :password_confirmation, "Konfirmasi kata sandi", class: "block mb-2 text-xs md:text-sm font-medium #{user.errors[:password_confirmation].any? ? 'text-red-700' : ''  }" %>
+                <%= f.password_field :password_confirmation, class: "bg-gray-50 w44 border text-xs md:text-sm rounded-lg block w-full p-2.5
+                    #{user.errors[:password_confirmation].any? ? 'text-red-900 border-red-500 focus:ring-red-500 focus:border-red-500 bg-red-50' : 'text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500'}" %>
+                    
+                <% if user.errors[:password_confirmation].any? %>
+                <div class="p-2 w-full text-red-700 text-xs md:text-sm"> 
+                    <%= user.errors[:password_confirmation].first %>
+                </div>
+                <% end %>
+            </div>
+            
+        </div>
+          
+
+        <%= f.submit "Simpan", class: "text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center" %>
+    </div>
+<% end %>
+

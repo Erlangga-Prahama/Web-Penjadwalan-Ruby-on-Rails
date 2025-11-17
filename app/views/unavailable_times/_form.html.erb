@@ -1,0 +1,46 @@
+<%= form_with url: @unavailable_time.teacher_id.present? ? unavailable_time_path(@unavailable_time.teacher_id) : unavailable_times_path, method: @unavailable_time.teacher_id.present? ? :patch : :post, local: true, data: { controller: "unavailable" } do |f| %>
+  <div class="grid grid-cols-2 p-4 gap-4">
+    <!-- PILIH GURU -->
+    <div class="col-span-2">
+      <label for="teacher_id" class="block text-sm font-medium mb-1">Pilih Guru</label>
+      <%= select_tag "unavailable_time[teacher_id]", 
+        options_from_collection_for_select(@teachers, :id, :nama, @unavailable_time.teacher_id),
+        prompt: "Pilih Guru",
+        class: "bg-gray-50 border border-gray-300 text-sm rounded-lg w-full p-2.5" %>
+    </div>
+
+    <!-- unavailable -->
+    <div class="col-span-2">
+      <!-- Label dan Tombol Pilih Semua -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+        <label class="block text-sm font-medium">Waktu Tidak Tersedia</label>
+
+      </div>
+
+      <!-- unavailable per hari -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4" data-controller="unavailable">
+        <% @days.each do |day| %>
+          <div class=" rounded p-2">
+            <p class="text-sm font-semibold mb-2"><%= day.name %></p>
+            <div class="space-y-1">
+              <% @time_blocks.select { |tb| tb.day_id == day.id }.each do |tb| %>
+                <label class="flex items-center space-x-2">
+                  <%= check_box_tag "unavailable_time[time_block_ids][]", tb.id,
+                    selected_time_block_ids&.include?(tb.id),
+                    id: "tb_#{tb.id}", class: "timeblock-checkbox" 
+                  %>
+                  <span class="text-sm"><%= tb.time %></span>
+                </label>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="col-span-2">
+      <%= f.submit "Simpan", class: "text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5" %>
+    </div>
+  </div>
+<% end %>

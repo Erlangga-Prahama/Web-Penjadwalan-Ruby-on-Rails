@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  class_room: one
+  subject: one
+  teacher: one
+  time_block: one
+  day: MyString
+  week: 1
+  locked: false
+  status: MyString
+
+two:
+  class_room: two
+  subject: two
+  teacher: two
+  time_block: two
+  day: MyString
+  week: 1
+  locked: false
+  status: MyString
