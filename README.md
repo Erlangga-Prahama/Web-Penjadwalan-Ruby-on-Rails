@@ -93,7 +93,7 @@ Pastikan environment berikut sudah terpasang:
 
 ## 📸 Screenshot
 
-*(Tambahkan screenshot tampilan aplikasi di sini)*
+![](screenshots/login.png)
 
 
 Dikembangkan oleh **Erlangga Prahama Yuda**
