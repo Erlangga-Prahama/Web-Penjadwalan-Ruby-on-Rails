@@ -95,5 +95,16 @@ Pastikan environment berikut sudah terpasang:
 
 ![](screenshots/login.png)
 
+![](screenshots/dash.png)
+
+![](screenshots/kelas.png)
+
+![](screenshots/mapel.png)
+
+![](screenshots/jadwal.png)
+
+![](screenshots/alokasi-guru.png)
+
+![](screenshots/view-guru.png)
 
 Dikembangkan oleh **Erlangga Prahama Yuda**
