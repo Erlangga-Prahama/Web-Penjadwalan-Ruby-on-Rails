@@ -36,5 +36,17 @@
         </svg>
     </button>
   </div>
+
+  <script>
+    document.addEventListener('turbo:load', function() {
+      const alert = document.getElementById('alert-1');
+      if (alert) {
+        setTimeout(() => {
+          alert.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+          setTimeout(() => alert.remove(), 300); // Tunggu animasi selesai
+        }, 4000);
+      }
+    });
+  </script>
   
 <% end %>

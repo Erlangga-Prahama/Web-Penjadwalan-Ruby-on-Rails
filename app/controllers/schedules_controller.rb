@@ -339,7 +339,7 @@ class SchedulesController < ApplicationController
 
         # Hanya ambil activity yang aktif dan time_block-nya juga aktif, serta grade cocok
         valid_activities = draft.time_block.activities.select do |activity|
-          activity.is_active && activity.time_block.is_active &&
+          activity.is_active &&
           (activity.grade.nil? || activity.grade == classroom_grade)
         end
 

@@ -385,9 +385,11 @@ class ScheduleGenerator
       end
     end
 
-    schedule
+    #schedule
     if @class_rooms.size < 5 || @time_blocks.size < 20
       enforce_weekly_caps(schedule)
+    else
+      schedule
     end
   end
 
