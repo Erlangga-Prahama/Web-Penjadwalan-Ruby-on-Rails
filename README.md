@@ -1,4 +1,4 @@
-# Sistem Informasi Sekolah
+# Sistem Informasi Penjadwalan Sekolah
 
 Aplikasi web untuk mengelola dan menghasilkan jadwal pelajaran sekolah. Sistem ini dirancang untuk membantu pihak sekolah dalam mengatur jadwal kelas, guru, mata pelajaran, serta berbagai aturan dan pembatasan penjadwalan.
 
@@ -106,5 +106,9 @@ Pastikan environment berikut sudah terpasang:
 ![](screenshots/alokasi-guru.png)
 
 ![](screenshots/view-guru.png)
+
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 Dikembangkan oleh **Erlangga Prahama Yuda**
