@@ -17,17 +17,8 @@ Aplikasi web untuk mengelola dan menghasilkan jadwal pelajaran sekolah. Sistem i
 * **Framework**: Ruby on Rails 7.1.3
 * **Database**: PostgreSQL
 * **Frontend**: Tailwind CSS & Flowbite
-* **Hotwire**: Turbo & Stimulus
 * **Algoritma**: Genetic Algorithm (Penjadwalan Pelajaran)
 
-## 📦 Prasyarat
-
-Pastikan environment berikut sudah terpasang:
-
-* Ruby >= 3.3.4
-* Rails >= 7.1.3
-* Node.js & Yarn / npm
-* PostgreSQL
 ## ⚙️ Instalasi
 
 1. Clone repository
